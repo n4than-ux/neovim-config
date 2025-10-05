@@ -8,17 +8,19 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
-			require("mason-lspconfig").setup({ ensure_installed = { "lua_ls" , "lemminx"} })
+			require("mason-lspconfig").setup({
+				ensure_installed = { "lua_ls", "lemminx" },
+			})
 		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			local lspconfig = require("lspconfig")
-			-- lua
+
+			-- Lua LS
 			vim.lsp.config("lua_ls", {
-				cmd = { "lua-language-server" },
+				cmd = { "lua-language-server" }, -- mason provides this
 				capabilities = capabilities,
 				settings = {
 					Lua = {
@@ -35,10 +37,9 @@ return {
 					},
 				},
 			})
-
 			vim.lsp.enable("lua_ls")
 
-			-- XML server
+			-- XML LS (lemminx)
 			vim.lsp.config("lemminx", {
 				cmd = { "lemminx" },
 				capabilities = capabilities,
@@ -54,3 +55,4 @@ return {
 		end,
 	},
 }
+
