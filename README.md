@@ -1,4 +1,4 @@
-# Install a C Compiler on Windows
+# Install a C Compiler 
 
 This guide explains how to install and set up a C compiler on **Windows** using **MSYS2**.  
 It provides a modern, reliable GCC environment that works well with most tools and editors.
