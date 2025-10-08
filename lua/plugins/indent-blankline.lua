@@ -1,12 +1,12 @@
 return {
-   {
+	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
 			require("ibl").setup({
 				indent = {
-					char = "│", -- could be "▏" or "┊" if you like thinner lines
+					char = "|", -- \u2502
 				},
 				scope = {
 					enabled = true,

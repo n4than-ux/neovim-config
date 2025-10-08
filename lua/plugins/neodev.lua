@@ -1,30 +1,25 @@
 return {
 	{
 		"folke/neodev.nvim",
-		ft = "lua", -- only load for Lua files
-		opts = {}, -- uses default settings
+		ft = "lua",
+		opts = {},
 	},
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "folke/neodev.nvim" },
 		config = function()
-			-- Setup neodev before lspconfig
 			require("neodev").setup({})
 
 			local lspconfig = require("lspconfig")
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			lspconfig.lua_ls.setup({
+				capabilities = capabilities,
 				settings = {
 					Lua = {
-						completion = {
-							callSnippet = "Replace",
-						},
-						diagnostics = {
-							globals = { "vim" }, -- because you're in Neovim
-						},
-						workspace = {
-							checkThirdParty = false, -- stop it nagging you
-						},
+						completion = { callSnippet = "Replace" },
+						diagnostics = { globals = { "vim" } },
+						workspace = { checkThirdParty = false },
 					},
 				},
 			})
