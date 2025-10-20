@@ -1,88 +1,78 @@
 return {
-	--mason
 	{
-		"mason-org/mason.nvim",
+		"williamboman/mason.nvim",
+		opts = {},
+	},
+
+	{
+		"williamboman/mason-lspconfig.nvim",
 		opts = {
-			ui = {
-				icons = {
-					package_installed = "[OK]",
-					package_pending = "->",
-					package_uninstalled = "[X]",
-				},
+			ensure_installed = { "lua_ls", "lemminx" },
+		},
+	},
+
+	{
+		"folke/neodev.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			library = {
+				enabled = true,
+				runtime = true,
+				types = true,
+				plugins = true,
 			},
 		},
 	},
 
 	{
-		"williamboman/mason.nvim",
-		config = function()
-			require("mason").setup()
-		end,
-	},
-
-	{
-		"williamboman/mason-lspconfig.nvim",
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "lemminx" },
-			})
-		end,
-	},
-
-	{
-		"folke/neodev.nvim",
-		lazy = false, -- load before lspconfig
-		priority = 1000,
-		config = function()
-			require("neodev").setup({
-				library = {
-					enabled = true,
-					runtime = true,
-					types = true,
-					plugins = true,
-				},
-			})
-		end,
-	},
-
-	{
 		"neovim/nvim-lspconfig",
-		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"folke/neodev.nvim",
+		},
+		opts = function()
+			local cmp_nvim_lsp = require("cmp_nvim_lsp")
+			local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-			-- Lua LS
-			vim.lsp.config.lua_ls.setup({
-				cmd = { "lua-language-server" },
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						runtime = { version = "LuaJIT" },
-						diagnostics = {
-							globals = { "vim", "require" },
+			return {
+				servers = {
+					lua_ls = {
+						capabilities = capabilities,
+						settings = {
+							Lua = {
+								runtime = { version = "LuaJIT" },
+								diagnostics = { globals = { "vim" } },
+								workspace = {
+									library = vim.api.nvim_get_runtime_file("", true),
+									checkThirdParty = false,
+								},
+								telemetry = { enable = false },
+							},
 						},
-						workspace = {
-							library = vim.api.nvim_get_runtime_file("", true),
-							checkThirdParty = false,
+					},
+
+					lemminx = {
+						capabilities = capabilities,
+						filetypes = { "xml", "xsd", "xsl", "xslt" },
+						settings = {
+							xml = {
+								format = { enabled = true },
+								validate = { enabled = true },
+							},
 						},
-						telemetry = { enable = false },
 					},
 				},
-			})
-
-			-- XML LS (lemminx)
-			vim.lsp.config.lemminx.setup({
-				cmd = { "lemminx" },
-				capabilities = capabilities,
-				filetypes = { "xml", "xsd", "xsl", "xslt" },
-				settings = {
-					xml = {
-						format = { enabled = true },
-						validate = { enabled = true },
-					},
-				},
-			})
+			}
+		end,
+		config = function(_, opts)
+			local lspconfig = require("lspconfig")
+			for server, config in pairs(opts.servers) do
+				lspconfig[server].setup(config)
+			end
 		end,
 	},
+
 	{
 		"nvimtools/none-ls.nvim",
 		config = function()
@@ -91,18 +81,22 @@ return {
 				sources = {
 					null_ls.builtins.formatting.stylua,
 					null_ls.builtins.formatting.prettier,
-					--null_ls.builtins.diagnostics.eslint_d,
 				},
 			})
 			vim.keymap.set("n", "<leader>=", function()
 				vim.lsp.buf.format({ async = true })
-			end, {})
+			end, { desc = "Format file" })
 		end,
 	},
+
 	{
 		"L3MON4D3/LuaSnip",
-		dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
+		dependencies = {
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets",
+		},
 	},
+
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
@@ -119,7 +113,7 @@ return {
 			cmp.setup({
 				snippet = {
 					expand = function(args)
-						require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+						luasnip.lsp_expand(args.body)
 					end,
 				},
 				window = {
@@ -132,8 +126,7 @@ return {
 					["<C-d>"] = cmp.mapping.scroll_docs(-4),
 					["<C-u>"] = cmp.mapping.scroll_docs(4),
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-					["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
@@ -143,7 +136,6 @@ return {
 							fallback()
 						end
 					end, { "i", "s" }),
-
 					["<S-Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
@@ -169,19 +161,13 @@ return {
 		event = "VeryLazy",
 		dependencies = { "neovim/nvim-lspconfig" },
 		config = function()
-			-- disable default inline text to prevent duplicates
 			vim.diagnostic.config({ virtual_text = false })
-
 			require("tiny-inline-diagnostic").setup({
-				preset = "modern", -- "modern" looks clean; others: "minimal", "classic"
-				hi = {
-					background = "Normal", -- inherits current colorscheme bg
-				},
+				preset = "modern",
+				hi = { background = "Normal" },
 				options = {
-					multilines = true, -- show multi-line messages when needed
-					show_source = true, -- include LSP source like [lua_ls]
-					-- You can tweak symbols if you want:
-					-- icons = { error = " ", warn = " ", info = " ", hint = " " },
+					multilines = true,
+					show_source = true,
 				},
 			})
 		end,
