@@ -15,5 +15,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.o.termguicolors = true
 
 require("vim-options")
--- import plugins
-require("lazy").setup("plugins")
+require("vim-helper")
+require("lazy").setup({
+	spec = { { import = "plugins" } },
+	checker = { enabled = true },
+})
