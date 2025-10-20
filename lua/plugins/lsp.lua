@@ -7,7 +7,7 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		opts = {
-			ensure_installed = { "lua_ls", "lemminx" },
+			ensure_installed = { "lua_ls" },
 		},
 	},
 
@@ -51,24 +51,14 @@ return {
 							},
 						},
 					},
-
-					lemminx = {
-						capabilities = capabilities,
-						filetypes = { "xml", "xsd", "xsl", "xslt" },
-						settings = {
-							xml = {
-								format = { enabled = true },
-								validate = { enabled = true },
-							},
-						},
-					},
 				},
 			}
 		end,
 		config = function(_, opts)
-			local lspconfig = require("lspconfig")
-			for server, config in pairs(opts.servers) do
-				lspconfig[server].setup(config)
+			for server, conf in pairs(opts.servers) do
+				pcall(function()
+					vim.lsp.configs[server].setup(conf)
+				end)
 			end
 		end,
 	},

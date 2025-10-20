@@ -25,14 +25,6 @@ vim.keymap.set("n", "<leader>p", '"+p') -- paste
 vim.keymap.set("x", "<leader>p", '"_dP') -- paste replace (keep register)
 
 -----------------------------------------------------------
--- File Save & Quit
------------------------------------------------------------
-vim.keymap.set("n", "<leader>s", ":w<CR>") -- save
-vim.keymap.set("n", "<leader>q", ":q<CR>") -- quit
-vim.keymap.set("n", "<leader>sq", ":wq<CR>") -- save & quit
-vim.keymap.set("n", "<leader>Q", ":q!<CR>") -- force quit
-
------------------------------------------------------------
 -- Navigation
 -----------------------------------------------------------
 vim.keymap.set("n", "<C-d>", "<C-d>zz") -- half-page down (centered)
