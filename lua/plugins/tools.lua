@@ -4,14 +4,36 @@ return {
       tag = "0.1.8",
       dependencies = { "nvim-lua/plenary.nvim" },
       opts = {},
-      config = function(_, opts)
-         local builtin = require("telescope.builtin")
-         vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-         vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-         vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-         vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
-         require("telescope").setup(opts)
-      end,
+      keys = {
+         {
+            "<leader>ff",
+            function()
+               local builtin = require("telescope.builtin")
+               builtin.find_files()
+            end,
+         },
+         {
+            "<leader>fg",
+            function()
+               local builtin = require("telescope.builtin")
+               builtin.live_grep()
+            end,
+         },
+         {
+            "<leader>fb",
+            function()
+               local builtin = require("telescope.builtin")
+               builtin.buffers()
+            end,
+         },
+         {
+            "<leader>fh",
+            function()
+               local builtin = require("telescope.builtin")
+               builtin.help_tags()
+            end,
+         },
+      },
    },
 
    {
@@ -68,11 +90,10 @@ return {
             },
          },
       },
-      config = function(_, opts)
-         require("neo-tree").setup(opts)
-
+      keys = {
          vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { silent = true })
-
+      },
+      config = function()
          local function set_transparency()
             vim.cmd([[
             hi! NeoTreeNormal guibg=NONE ctermbg=NONE
@@ -108,9 +129,6 @@ return {
             delay = 1000,
          },
       },
-      config = function(_, opts)
-         require("gitsigns").setup(opts)
-      end,
    },
 
    {
@@ -126,9 +144,6 @@ return {
          disable_commit_confirmation = true,
          integrations = { diffview = true },
       },
-      config = function(_, opts)
-         require("neogit").setup(opts)
-      end,
    },
 
    {
@@ -141,9 +156,6 @@ return {
             folder_open = "",
          },
       },
-      config = function(_, opts)
-         require("diffview").setup(opts)
-      end,
    },
 
    {

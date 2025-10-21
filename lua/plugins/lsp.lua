@@ -12,55 +12,15 @@ return {
 	},
 
 	{
-		"folke/neodev.nvim",
-		lazy = false,
-		priority = 1000,
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
 		opts = {
 			library = {
-				enabled = true,
-				runtime = true,
-				types = true,
-				plugins = true,
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
 			},
 		},
-	},
-
-	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"folke/neodev.nvim",
-		},
-		opts = function()
-			local cmp_nvim_lsp = require("cmp_nvim_lsp")
-			local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-			return {
-				servers = {
-					lua_ls = {
-						capabilities = capabilities,
-						settings = {
-							Lua = {
-								runtime = { version = "LuaJIT" },
-								diagnostics = { globals = { "vim" } },
-								workspace = {
-									library = vim.api.nvim_get_runtime_file("", true),
-									checkThirdParty = false,
-								},
-								telemetry = { enable = false },
-							},
-						},
-					},
-				},
-			}
-		end,
-		config = function(_, opts)
-			for server, conf in pairs(opts.servers) do
-				pcall(function()
-					vim.lsp.configs[server].setup(conf)
-				end)
-			end
-		end,
 	},
 
 	{
@@ -160,6 +120,59 @@ return {
 					show_source = true,
 				},
 			})
+		end,
+	},
+
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"folke/neodev.nvim",
+		},
+		event = "VeryLazy",
+		opts = function()
+			local cmp_nvim_lsp = require("cmp_nvim_lsp")
+			local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+			return {
+				servers = {
+					lua_ls = {
+						capabilities = capabilities,
+						settings = {
+							Lua = {
+								runtime = { version = "LuaJIT" },
+								diagnostics = { globals = { "vim" } },
+								workspace = {
+									library = vim.api.nvim_get_runtime_file("", true),
+									checkThirdParty = false,
+								},
+								telemetry = { enable = false },
+							},
+						},
+					},
+				},
+			}
+		end,
+		config = function(_, opts)
+			-- check if vim.lsp.configs exists first
+			if not vim.lsp.configs then
+				vim.notify("vim.lsp.configs is not available yet", vim.log.levels.WARN)
+				-- return
+			end
+			for server, conf in pairs(opts.servers) do
+				local ok, err = pcall(function()
+					local lsp = vim.lsp.configs[server]
+					if lsp then
+						lsp.setup(conf)
+					else
+						error("LSP server '" .. server .. "' not found")
+					end
+				end)
+
+				if not ok then
+					vim.notify("Failed to setup LSP '" .. server .. "': " .. err, vim.log.levels.WARN)
+				end
+			end
 		end,
 	},
 }

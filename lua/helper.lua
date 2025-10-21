@@ -1,5 +1,4 @@
 -- all vim helper functions here
-
 vim.keymap.set("n", "<leader>ce", function()
 	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
 	if #diagnostics == 0 then
@@ -14,13 +13,18 @@ vim.keymap.set("n", "<leader>ce", function()
 
 	local message = table.concat(messages, "\n")
 	vim.fn.setreg("+", message)
-	vim.notify("Copied diagnostic:\n" .. message, vim.log.levels.INFO)
+	vim.notify("Copied diagnostic:" .. message, vim.log.levels.INFO)
 end, { noremap = true, silent = true })
 
--- go to errors in a file :/
-vim.keymap.set("n", "<leader>ne", vim.diagnostic.goto_next) -- next err
-vim.keymap.set("n", "<leader>pe", vim.diagnostic.goto_prev) -- previous err
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+-- go to next errors in a file :/
+vim.keymap.set('n', '<leader>ne', function()
+  vim.diagnostic.jump({ count = 1, float = true })
+end, { desc = 'Go to next diagnostic message' })
+-- go to previous errors in a file
+vim.keymap.set('n', '<leader>pe', function()
+  vim.diagnostic.jump({ count = -1, float = true })
+end, { desc = 'Go to previous diagnostic message' })
+
 -- copy current file path (absolute) into clipboard
 vim.keymap.set("n", "<leader>cp", function()
 	local filepath = vim.fn.expand("%:p")

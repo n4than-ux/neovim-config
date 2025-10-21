@@ -9,14 +9,13 @@ return {
          terminal_colors = true, -- sync terminal colors
          styles = {
             comments = { italic = true },
-            keywords = { italic = false },
+            keywords = { italic = true },
             functions = {},
             variables = {},
          },
          day_brightness = 1,
       },
-      config = function(_, opts)
-         require("solarized-osaka").setup(opts)
+      config = function()
          vim.cmd.colorscheme("solarized-osaka")
       end,
    },
@@ -28,9 +27,6 @@ return {
             spelling = { enabled = true },
          },
       },
-      config = function(_, opts)
-         require("which-key").setup(opts)
-      end,
    },
    --lualine
    {
@@ -44,7 +40,7 @@ return {
          powerline_fonts = 1,
          tabline_formatter = "unique_tail_improved",
          lsp_enabled = 1,
-         lsp_error_symbol = "E:",
+         lsp_error_symbol = "X:",
          lsp_warning_symbol = "W:",
          section_x = "%{&fileencoding?&fileencoding:&encoding} [%{&fileformat}]",
          left_sep = "",
@@ -74,25 +70,19 @@ return {
       opts = {
          options = {
             numbers = "none",
-            left_mouse_command = "buffer %d",
-            middle_mouse_command = nil,
             left_trunc_marker = "<-",
             right_trunc_marker = "->",
             max_name_length = 30,
             max_prefix_length = 15,
-            tab_size = 21,
+            tab_size = 20,
             show_tab_indicators = true,
             persist_buffer_sort = true,
             separator_style = "thin",
             enforce_regular_tabs = false,
             always_show_bufferline = true,
-            sort_by = "id",
          },
       },
-      config = function(_, opts)
-         require("bufferline").setup(opts)
-         vim.opt.termguicolors = true
-
+      config = function()
          vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>", { silent = true })
          vim.keymap.set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { silent = true })
          vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { silent = true })
@@ -123,9 +113,6 @@ return {
             },
          },
       },
-      config = function(_, opts)
-         require("ibl").setup(opts)
-      end,
    },
    -- nvim-notify
    {
@@ -139,11 +126,6 @@ return {
          render = "compact",
          top_down = false, -- newest notifications at the bottom
       },
-      config = function(_, opts)
-         local notify = require("notify")
-         notify.setup(opts)
-         vim.notify = notify
-      end,
    },
    -- noice.nvim
    {
@@ -209,9 +191,6 @@ return {
          },
          health = { checker = false },
       },
-      config = function(_, opts)
-         require("noice").setup(opts)
-      end,
    },
    --rainbow-bracket
    {

@@ -25,6 +25,7 @@ end
 require("lazy").setup({
 	spec = { { import = "plugins" } },
 	checker = { enabled = true },
+	install = { colorscheme = { "craftzdog/solarized-osaka.nvim" } },
 	defaults = {
 		lazy = false,
 		version = false, -- always use the latest git commit
