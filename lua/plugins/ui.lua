@@ -5,7 +5,7 @@ return {
       lazy = false,
       priority = 1000,
       opts = {
-         transparent = true, -- removes background
+         transparent = true,     -- removes background
          terminal_colors = true, -- sync terminal colors
          styles = {
             comments = { italic = true },
@@ -221,5 +221,13 @@ return {
       config = function(_, opts)
          vim.g.rainbow_delimiters = opts
       end,
+   },
+   --render-markdown
+   {
+      'MeanderingProgrammer/render-markdown.nvim',
+      dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+      ---@module 'render-markdown'
+      ---@type render.md.UserConfig
+      opts = {},
    },
 }
