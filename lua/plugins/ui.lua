@@ -5,7 +5,7 @@ return {
       lazy = false,
       priority = 1000,
       opts = {
-         transparent = true,     -- removes background
+         transparent = true, -- removes background
          terminal_colors = true, -- sync terminal colors
          styles = {
             comments = { italic = true },
@@ -30,37 +30,62 @@ return {
    },
    --lualine
    {
-      "vim-airline/vim-airline",
-      dependencies = {
-         "vim-airline/vim-airline-themes",
-         "nvim-tree/nvim-web-devicons",
-      },
+      "nvim-lualine/lualine.nvim",
+      dependencies = { "nvim-tree/nvim-web-devicons" },
       opts = {
-         theme = "solarized",
-         powerline_fonts = 1,
-         tabline_formatter = "unique_tail_improved",
-         lsp_enabled = 1,
-         lsp_error_symbol = "X:",
-         lsp_warning_symbol = "W:",
-         section_x = "%{&fileencoding?&fileencoding:&encoding} [%{&fileformat}]",
-         left_sep = "",
-         left_alt_sep = "",
-         right_sep = "",
-         right_alt_sep = "",
+         options = {
+            icons_enabled = true,
+            theme = "auto",
+            component_separators = { left = "", right = "" },
+            section_separators = { left = "", right = "" },
+            disabled_filetypes = {
+               statusline = {},
+               winbar = {},
+            },
+            ignore_focus = {},
+            always_divide_middle = true,
+            always_show_tabline = true,
+            globalstatus = false,
+            refresh = {
+               statusline = 1000,
+               tabline = 1000,
+               winbar = 1000,
+               refresh_time = 38, -- ~144fps
+               events = {
+                  "WinEnter",
+                  "BufEnter",
+                  "BufWritePost",
+                  "SessionLoadPost",
+                  "FileChangedShellPost",
+                  "VimResized",
+                  "Filetype",
+                  "CursorMoved",
+                  "CursorMovedI",
+                  "ModeChanged",
+               },
+            },
+         },
+         sections = {
+            lualine_a = { "mode" },
+            lualine_b = { "branch", "diff", "diagnostics" },
+            lualine_c = { "filename" },
+            lualine_x = { "encoding", "fileformat", "filetype" },
+            lualine_y = { "progress" },
+            lualine_z = { "location" },
+         },
+         inactive_sections = {
+            lualine_a = {},
+            lualine_b = {},
+            lualine_c = { "filename" },
+            lualine_x = { "location" },
+            lualine_y = {},
+            lualine_z = {},
+         },
+         tabline = {},
+         winbar = {},
+         inactive_winbar = {},
+         extensions = {},
       },
-      config = function(_, opts)
-         vim.g.airline_powerline_fonts = opts.powerline_fonts
-         vim.g.airline_theme = opts.theme
-         vim.g["airline#extensions#tabline#formatter"] = opts.tabline_formatter
-         vim.g["airline#extensions#lsp#enabled"] = opts.lsp_enabled
-         vim.g["airline#extensions#lsp#error_symbol"] = opts.lsp_error_symbol
-         vim.g["airline#extensions#lsp#warning_symbol"] = opts.lsp_warning_symbol
-         vim.g["airline_section_x"] = opts.section_x
-         vim.g.airline_left_sep = opts.left_sep
-         vim.g.airline_left_alt_sep = opts.left_alt_sep
-         vim.g.airline_right_sep = opts.right_sep
-         vim.g.airline_right_alt_sep = opts.right_alt_sep
-      end,
    },
    -- bufferline
    {
@@ -224,8 +249,8 @@ return {
    },
    --render-markdown
    {
-      'MeanderingProgrammer/render-markdown.nvim',
-      dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+      "MeanderingProgrammer/render-markdown.nvim",
+      dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
       ---@module 'render-markdown'
       ---@type render.md.UserConfig
       opts = {},
