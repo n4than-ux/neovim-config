@@ -24,19 +24,30 @@ return {
 	},
 
 	{
-		"nvimtools/none-ls.nvim",
-		config = function()
-			local null_ls = require("null-ls")
-			null_ls.setup({
-				sources = {
-					null_ls.builtins.formatting.stylua,
-					null_ls.builtins.formatting.prettier,
-				},
-			})
-			vim.keymap.set("n", "<leader>=", function()
-				vim.lsp.buf.format({ async = true })
-			end, { desc = "Format file" })
-		end,
+		"stevearc/conform.nvim",
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				python = { "isort", "black" },
+				rust = { "rustfmt", lsp_format = "fallback" },
+				javascript = { "prettierd", "prettier", stop_after_first = true },
+			},
+			format_on_save = function(bufnr)
+				if vim.api.nvim_buf_line_count(bufnr) > 5000 then
+					return
+				end
+				return { timeout_ms = 500, lsp_fallback = true }
+			end,
+		},
+		keys = {
+			{
+				"<leader>=",
+				function()
+					require("conform").format({ async = true, lsp_fallback = true })
+				end,
+				desc = "Format file",
+			},
+		},
 	},
 
 	{
@@ -127,7 +138,7 @@ return {
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
-			"folke/neodev.nvim",
+			"folke/lazydev.nvim",
 		},
 		event = "VeryLazy",
 		opts = function()
@@ -165,12 +176,12 @@ return {
 					if lsp then
 						lsp.setup(conf)
 					else
-						error("LSP server '" .. server .. "' not found")
+						error("LSP server '" .. server .. "' not found:(")
 					end
 				end)
 
 				if not ok then
-					vim.notify("Failed to setup LSP '" .. server .. "': " .. err, vim.log.levels.WARN)
+					vim.notify("Failed to setup LSP '" .. server .. "': " .. err .. ":(", vim.log.levels.WARN)
 				end
 			end
 		end,

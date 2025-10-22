@@ -1,187 +1,236 @@
 return {
-   {
-      "nvim-telescope/telescope.nvim",
-      tag = "0.1.8",
-      dependencies = { "nvim-lua/plenary.nvim" },
-      opts = {},
-      keys = {
-         {
-            "<leader>ff",
-            function()
-               local builtin = require("telescope.builtin")
-               builtin.find_files()
-            end,
-         },
-         {
-            "<leader>fg",
-            function()
-               local builtin = require("telescope.builtin")
-               builtin.live_grep()
-            end,
-         },
-         {
-            "<leader>fb",
-            function()
-               local builtin = require("telescope.builtin")
-               builtin.buffers()
-            end,
-         },
-         {
-            "<leader>fh",
-            function()
-               local builtin = require("telescope.builtin")
-               builtin.help_tags()
-            end,
-         },
-      },
-   },
+	{
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.8",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
+		keys = {
+			{
+				"<leader>ff",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.find_files()
+				end,
+			},
+			{
+				"<leader>fg",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.live_grep()
+				end,
+			},
+			{
+				"<leader>fb",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.buffers()
+				end,
+			},
+			{
+				"<leader>fh",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.help_tags()
+				end,
+			},
+		},
+	},
 
-   {
-      "folke/trouble.nvim",
-      cmd = "Trouble",
-      opts = {}, -- leave empty for defaults
-      keys = {
-         {
-            "<leader>xx",
-            "<cmd>Trouble diagnostics toggle<cr>",
-            desc = "Diagnostics (Trouble)",
-         },
-         {
-            "<leader>xX",
-            "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-            desc = "Buffer Diagnostics (Trouble)",
-         },
-         {
-            "<leader>cs",
-            "<cmd>Trouble symbols toggle focus=false<cr>",
-            desc = "Symbols (Trouble)",
-         },
-         {
-            "<leader>cl",
-            "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-            desc = "LSP Definitions / References / ... (Trouble)",
-         },
-         {
-            "<leader>xL",
-            "<cmd>Trouble loclist toggle<cr>",
-            desc = "Location List (Trouble)",
-         },
-         {
-            "<leader>xQ",
-            "<cmd>Trouble qflist toggle<cr>",
-            desc = "Quickfix List (Trouble)",
-         },
-      },
-   },
+	{
+		"folke/trouble.nvim",
+		cmd = "Trouble",
+		opts = {}, -- leave empty for defaults
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>cs",
+				"<cmd>Trouble symbols toggle focus=false<cr>",
+				desc = "Symbols (Trouble)",
+			},
+			{
+				"<leader>cl",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions / References / ... (Trouble)",
+			},
+			{
+				"<leader>xL",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>xQ",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
+		},
+	},
 
-   {
-      "nvim-neo-tree/neo-tree.nvim",
-      branch = "v3.x",
-      dependencies = {
-         "nvim-lua/plenary.nvim",
-         "MunifTanjim/nui.nvim",
-         "nvim-tree/nvim-web-devicons",
-      },
-      lazy = false,
-      opts = {
-         window = {
-            mappings = {
-               ["<space>"] = "none", -- an example of using opts
-            },
-         },
-      },
-      keys = {
-         vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { silent = true })
-      },
-      config = function()
-         local function set_transparency()
-            vim.cmd([[
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			"nvim-tree/nvim-web-devicons",
+		},
+		lazy = false,
+		opts = {
+			window = {
+				mappings = {
+					["<space>"] = "none", -- an example of using opts
+				},
+			},
+		},
+		keys = {
+			{ "<leader>e", ":Neotree toggle<CR>", silent = true, desc = "Toggle neotree" },
+		},
+		config = function()
+			local function set_transparency()
+				vim.cmd([[
             hi! NeoTreeNormal guibg=NONE ctermbg=NONE
             hi! NeoTreeNormalNC guibg=NONE ctermbg=NONE
             hi! NeoTreeEndOfBuffer guibg=NONE ctermbg=NONE
          ]])
-         end
+			end
 
-         set_transparency()
-         vim.api.nvim_create_autocmd("ColorScheme", {
-            pattern = "*",
-            callback = set_transparency,
-         })
-      end,
-   },
+			set_transparency()
+			vim.api.nvim_create_autocmd("ColorScheme", {
+				pattern = "*",
+				callback = set_transparency,
+			})
+		end,
+	},
 
-   {
-      "lewis6991/gitsigns.nvim",
-      event = { "BufReadPre", "BufNewFile" },
-      opts = {
-         signs = {
-            add = { text = "┃" },
-            change = { text = "┃" },
-            delete = { text = "_" },
-            topdelete = { text = "‾" },
-            changedelete = { text = "~" },
-            untracked = { text = "┆" },
-         },
-         signs_staged_enable = true,
-         current_line_blame_opts = {
-            virt_text = true,
-            virt_text_pos = "eol",
-            delay = 1000,
-         },
-      },
-   },
+	{
+		"lewis6991/gitsigns.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		opts = {
+			signs = {
+				add = { text = "┃" },
+				change = { text = "┃" },
+				delete = { text = "_" },
+				topdelete = { text = "‾" },
+				changedelete = { text = "~" },
+				untracked = { text = "┆" },
+			},
+			signs_staged_enable = true,
+			current_line_blame_opts = {
+				virt_text = true,
+				virt_text_pos = "eol",
+				delay = 1000,
+			},
+		},
+	},
 
-   {
-      "NeogitOrg/neogit",
-      dependencies = {
-         "nvim-lua/plenary.nvim",
-         "sindrets/diffview.nvim",
-      },
-      keys = {
-         { "<leader>gg", ":Neogit<CR>", desc = "Open Neogit" },
-      },
-      opts = {
-         disable_commit_confirmation = true,
-         integrations = { diffview = true },
-      },
-   },
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"sindrets/diffview.nvim",
+		},
+		keys = {
+			{ "<leader>gg", ":Neogit<CR>", desc = "Open Neogit" },
+		},
+		opts = {
+			disable_commit_confirmation = true,
+			integrations = { diffview = true },
+		},
+	},
 
-   {
-      "sindrets/diffview.nvim",
-      dependencies = "nvim-lua/plenary.nvim",
-      opts = {
-         enhanced_diff_hl = true,
-         icons = {
-            folder_closed = "",
-            folder_open = "",
-         },
-      },
-   },
+	{
+		"sindrets/diffview.nvim",
+		dependencies = "nvim-lua/plenary.nvim",
+		opts = {
+			enhanced_diff_hl = true,
+			icons = {
+				folder_closed = "",
+				folder_open = "",
+			},
+		},
+	},
 
-   {
-      "voldikss/vim-floaterm",
-      keys = {
-         { "<F12>",      ":FloatermToggle<CR>", desc = "Toggle Floaterm" },
-         { "<leader>ft", ":FloatermToggle<CR>", desc = "Toggle Floaterm" },
-         { "<leader>fn", ":FloatermNext<CR>",   desc = "Next Floaterm" },
-         { "<leader>fp", ":FloatermPrev<CR>",   desc = "Previous Floaterm" },
-      },
-      config = function()
-         -- Basic settings
-         vim.g.floaterm_width = 0.9
-         vim.g.floaterm_height = 0.6
-         vim.g.floaterm_position = "center"
-         vim.g.floaterm_autoclose = 1
-         vim.g.floaterm_opener = "edit"
+	{
+		"voldikss/vim-floaterm",
+		keys = {
+			{ "<F12>", ":FloatermToggle<CR>", desc = "Toggle Floaterm" },
+			{ "<leader>ft", ":FloatermToggle<CR>", desc = "Toggle Floaterm" },
+			{ "<leader>fn", ":FloatermNext<CR>", desc = "Next Floaterm" },
+			{ "<leader>fp", ":FloatermPrev<CR>", desc = "Previous Floaterm" },
+		},
+		config = function()
+			-- Basic settings
+			vim.g.floaterm_width = 0.9
+			vim.g.floaterm_height = 0.6
+			vim.g.floaterm_position = "center"
+			vim.g.floaterm_autoclose = 1
+			vim.g.floaterm_opener = "edit"
 
-         -- Keymaps inside terminal
-         vim.cmd([[
+			-- Keymaps inside terminal
+			vim.cmd([[
         tnoremap <Esc> <C-\><C-n>
         tnoremap <C-h> <C-\><C-n><C-w>h
         tnoremap <C-j> <C-\><C-n><C-w>j
         tnoremap <C-k> <C-\><C-n><C-w>k
         tnoremap <C-l> <C-\><C-n><C-w>l
       ]])
-      end,
-   },
+		end,
+	},
+
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		---@type Flash.Config
+		opts = {},
+		keys = {
+			{
+				"s",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
+			{
+				"<c-s>",
+				mode = { "c" },
+				function()
+					require("flash").toggle()
+				end,
+				desc = "Toggle Flash Search",
+			},
+		},
+	},
 }

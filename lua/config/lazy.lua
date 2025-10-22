@@ -12,14 +12,14 @@ end
 print("Loaded successfully!")
 vim.opt.rtp:prepend(lazypath)
 
--- List of modules to check
 local modules = { "keymaps", "options", "helper" }
 for _, mod in ipairs(modules) do
-	-- Try to require the module safely
-	local ok, _ = pcall(require, mod)
+	local ok, err = pcall(require, mod)
 	if ok then
 		print(mod .. " loaded:D")
-	end
+   else
+      vim.notify(mod .. " failed to load: " .. err, vim.log.levels.WARN)
+   end
 end
 
 require("lazy").setup({
