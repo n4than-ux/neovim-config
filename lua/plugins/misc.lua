@@ -1,62 +1,72 @@
 return {
-   {
-      "tpope/vim-commentary",
-      event = { "BufReadPost", "BufNewFile" },
-   },
+	{
+		"tpope/vim-commentary",
+		event = { "BufReadPost", "BufNewFile" },
+	},
 
-   {
-      "folke/snacks.nvim",
-      opts = {
-         scroll = { enabled = false },
-      },
-      keys = {},
-   },
+	{
+		"folke/snacks.nvim",
+		opts = {
+			scroll = { enabled = false },
+		},
+		keys = {},
+	},
 
-   {
-      "nvim-treesitter/nvim-treesitter",
-      build = ":TSUpdate",
-      branch = "master",
-      lazy = false,
-      opts = {
-         auto_install = true,
-         ensure_installed = { "lua", "javascript", "html", "css" },
-         sync_install = false,
-         highlight = { enable = true },
-         indent = { enable = true },
-         rainbow = {
-            enable = true,
-            extended_mode = true,
-            max_file_lines = 1000,
-         },
-      },
-   },
-   {
-      "karb94/neoscroll.nvim",
-      opts = {
-         mappings = { -- Keys to be mapped to their corresponding default scrolling animation
-            "<C-u>",
-            "<C-d>",
-            "<C-b>",
-            "<C-f>",
-            "<C-y>",
-            "<C-e>",
-            "zt",
-            "zz",
-            "zb",
-         },
-         hide_cursor = true,    -- Hide cursor while scrolling
-         stop_eof = true,       -- Stop at <EOF> when scrolling downwards
-         respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-         cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-         duration_multiplier = 1.0, -- Global duration multiplier
-         easing = "linear",     -- Default easing function
-         pre_hook = nil,        -- Function to run before the scrolling animation starts
-         post_hook = nil,       -- Function to run after the scrolling animation ends
-         performance_mode = false, -- Disable "Performance Mode" on all buffers.
-         ignored_events = {     -- Events ignored while scrolling
-            "WinScrolled",
-            "CursorMoved",
-         },
-      },
-   },
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+		branch = "master",
+		lazy = false,
+		opts = {
+			auto_install = true,
+			ensure_installed = { "lua", "javascript", "html", "css" },
+			sync_install = false,
+			highlight = { enable = true },
+			indent = { enable = true },
+			rainbow = {
+				enable = true,
+				extended_mode = true,
+				max_file_lines = 1000,
+			},
+		},
+	},
+	{
+		"karb94/neoscroll.nvim",
+		opts = {
+			mappings = { -- Keys to be mapped to their corresponding default scrolling animation
+				"<C-u>",
+				"<C-d>",
+				"<C-b>",
+				"<C-f>",
+				"<C-y>",
+				"<C-e>",
+				"zt",
+				"zz",
+				"zb",
+			},
+			hide_cursor = true, -- Hide cursor while scrolling
+			stop_eof = true, -- Stop at <EOF> when scrolling downwards
+			respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+			cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+			duration_multiplier = 1.0, -- Global duration multiplier
+			easing = "linear", -- Default easing function
+			pre_hook = nil, -- Function to run before the scrolling animation starts
+			post_hook = nil, -- Function to run after the scrolling animation ends
+			performance_mode = false, -- Disable "Performance Mode" on all buffers.
+			ignored_events = { -- Events ignored while scrolling
+				"WinScrolled",
+				"CursorMoved",
+			},
+		},
+	},
+
+	{
+		"dstein64/vim-startuptime",
+		-- lazy-load on a command
+		cmd = "StartupTime",
+		-- init is called during startup. Configuration for vim plugins typically should be set in an init function
+		init = function()
+			vim.g.startuptime_tries = 10
+		end,
+	},
 }

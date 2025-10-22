@@ -256,4 +256,6 @@ return {
 		---@type render.md.UserConfig
 		opts = { latex = { enabled = false } },
 	},
+
+	{ "nvim-tree/nvim-web-devicons", lazy = true },
 }

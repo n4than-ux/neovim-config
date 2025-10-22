@@ -2,7 +2,6 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.8",
-		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
 		keys = {
 			{
@@ -78,9 +77,7 @@ return {
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v3.x",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
-			"nvim-tree/nvim-web-devicons",
 		},
 		lazy = false,
 		opts = {
@@ -134,7 +131,6 @@ return {
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
 			"sindrets/diffview.nvim",
 		},
 		keys = {
@@ -148,7 +144,6 @@ return {
 
 	{
 		"sindrets/diffview.nvim",
-		dependencies = "nvim-lua/plenary.nvim",
 		opts = {
 			enhanced_diff_hl = true,
 			icons = {
@@ -232,5 +227,10 @@ return {
 				desc = "Toggle Flash Search",
 			},
 		},
+	},
+
+	{
+		"nvim-lua/plenary.nvim",
+		lazy = true,
 	},
 }
