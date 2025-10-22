@@ -1,7 +1,9 @@
 return {
 	{
-		"tpope/vim-commentary",
-		event = { "BufReadPost", "BufNewFile" },
+		"numToStr/Comment.nvim",
+		opts = {
+			-- add any options here
+		},
 	},
 
 	{
@@ -39,5 +41,15 @@ return {
 		init = function()
 			vim.g.startuptime_tries = 10
 		end,
+	},
+	{
+		"m4xshen/hardtime.nvim",
+		lazy = false,
+		dependencies = { "MunifTanjim/nui.nvim" },
+		opts = {},
+	},
+
+	{
+		"petertriho/nvim-scrollbar",
 	},
 }

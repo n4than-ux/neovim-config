@@ -184,4 +184,35 @@ return {
 		"nvim-lua/plenary.nvim",
 		lazy = true,
 	},
+
+	{
+		"kevinhwang91/nvim-bqf",
+		ft = "qf",
+		opts = {
+			auto_enable = true,
+			preview = {
+				win_height = 12,
+				win_vheight = 12,
+				delay_syntax = 80,
+				border_chars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+			},
+			func_map = {
+				vsplit = "<C-v>",
+				ptogglemode = "z,",
+				stoggleup = "",
+			},
+			filter = {
+				fzf = {
+					action_for = { ["ctrl-s"] = "split" },
+					extra_opts = { "--bind", "ctrl-o:toggle-all" },
+				},
+			},
+		},
+		keys = {
+			{ "<leader>fo", "<cmd>copen<cr>", desc = "Open Quickfix" },
+			{ "<leader>fc", "<cmd>cclose<cr>", desc = "Close Quickfix" },
+			{ "<leader>fn", "<cmd>cnext<cr>", desc = "Next Quickfix item" },
+			{ "<leader>fp", "<cmd>cprev<cr>", desc = "Previous Quickfix item" },
+		},
+	},
 }
