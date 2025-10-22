@@ -27,8 +27,8 @@ map("n", "N", "Nzzzv") -- search prev (centered)
 map("n", "<C-a>", "gg<S-v>G") -- select all
 
 -- Splits & Windows
-map("n", "<leader>sv", ":vsplit<CR>", {desc = "Vertical split"}) -- vertical split
-map("n", "<leader>sh", ":split<CR>", {desc = "Horizontal split"}) -- horizontal split
+map("n", "sv", ":vsplit<CR>", {desc = "Vertical split"}) -- vertical split
+map("n", "ss", ":split<CR>", {desc = "Horizontal split"}) -- horizontal split
 map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
 map("n", "<C-h>", "<C-w>h")
@@ -47,3 +47,5 @@ map("x", "<leader>p", '"_dP') -- paste over selection without losing yank
 map("n", "x", '"_x')  -- delete char without copying
 map("n", "D", '"_D')  -- delete to end of line without copying
 map("v", "d", '"_d')  -- delete selection without copying
+
+
