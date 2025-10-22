@@ -16,7 +16,8 @@ print("Loaded successfully!")
 vim.opt.rtp:prepend(lazypath)
 
 -- Leader key
-vim.g.mapleader = "\\"
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 local modules = { "keymaps", "options", "helper" }
 for _, mod in ipairs(modules) do

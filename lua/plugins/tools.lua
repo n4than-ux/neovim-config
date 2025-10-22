@@ -10,6 +10,7 @@ return {
 					local builtin = require("telescope.builtin")
 					builtin.find_files()
 				end,
+				desc = "Telescope Find Files",
 			},
 			{
 				"<leader>fg",
@@ -17,6 +18,7 @@ return {
 					local builtin = require("telescope.builtin")
 					builtin.live_grep()
 				end,
+				desc = "Telescope Live Grep",
 			},
 			{
 				"<leader>fb",
@@ -24,6 +26,7 @@ return {
 					local builtin = require("telescope.builtin")
 					builtin.buffers()
 				end,
+				desc = "List All Buffers",
 			},
 			{
 				"<leader>fh",
@@ -31,6 +34,71 @@ return {
 					local builtin = require("telescope.builtin")
 					builtin.help_tags()
 				end,
+				desc = "Telescope Help",
+			},
+			{
+				"<leader>gc",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.git_commits()
+				end,
+				desc = "Git Commit (Telescope)",
+			},
+			{
+				"<leader>gs",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.git_status()
+				end,
+				desc = "Git Status (Telescope)",
+			},
+			{
+				"<leader>lr",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.lsp_references()
+				end,
+				desc = "LSP References (Telescope)",
+			},
+			{
+				"<leader>ld",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.lsp_definitions()
+				end,
+				desc = "LSP Definitions (Telescope)",
+			},
+			{
+				"<leader>li",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.lsp_implementations()
+				end,
+				desc = "LSP Implementations (Telescope)",
+			},
+			{
+				"<leader>ls",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.lsp_document_symbols()
+				end,
+				desc = "LSP Document Symbols (Telescope)",
+			},
+			{
+				"<leader>km",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.keymaps()
+				end,
+				desc = "Show keymaps (Telescope)",
+			},
+			{
+				"<leader>ch",
+				function()
+					local builtin = require("telescope.builtin")
+					builtin.command_history()
+				end,
+				desc = "Show Commands History (Telescope)",
 			},
 		},
 	},
@@ -124,31 +192,6 @@ return {
 				virt_text = true,
 				virt_text_pos = "eol",
 				delay = 1000,
-			},
-		},
-	},
-
-	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"sindrets/diffview.nvim",
-		},
-		keys = {
-			{ "<leader>gg", ":Neogit<CR>", desc = "Open Neogit" },
-		},
-		opts = {
-			disable_commit_confirmation = true,
-			integrations = { diffview = true },
-		},
-	},
-
-	{
-		"sindrets/diffview.nvim",
-		opts = {
-			enhanced_diff_hl = true,
-			icons = {
-				folder_closed = "",
-				folder_open = "",
 			},
 		},
 	},

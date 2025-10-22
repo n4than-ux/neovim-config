@@ -32,11 +32,12 @@ return {
 
 	{
 		"nvim-lualine/lualine.nvim",
+		event = "VeryLazy",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
 			options = {
 				icons_enabled = true,
-				theme = "auto",
+				theme = "solarized_dark",
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
@@ -156,6 +157,9 @@ return {
 			render = "default",
 			top_down = false, -- newest notifications at the bottom
 		},
+		config = function()
+			vim.notify = require("notify")
+		end,
 	},
 
 	{
@@ -166,6 +170,7 @@ return {
 			"rcarriga/nvim-notify",
 		},
 		opts = {
+			lsp_doc_border = true,
 			lsp = {
 				progress = { enabled = true },
 				override = {
@@ -480,6 +485,63 @@ return {
 			},
 			virt_text = {
 				priority = 2048,
+			},
+		},
+	},
+
+	{
+		"j-hui/fidget.nvim",
+		opts = {
+			integration = {
+				["nvim-tree"] = {
+					enable = true, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+					-- DEPRECATED; use notification.window.avoid = { "NvimTree" }
+				},
+			},
+		},
+	},
+
+	{
+		"folke/twilight.nvim",
+		opts = {
+			{
+				dimming = {
+					alpha = 0.25, -- amount of dimming
+					-- we try to get the foreground from the highlight groups or fallback color
+					color = { "Normal", "#ffffff" },
+					term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
+					inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
+				},
+				context = 10, -- amount of lines we will try to show around the current line
+				treesitter = true, -- use treesitter when available for the filetype
+				-- treesitter is used to automatically expand the visible text,
+				-- but you can further control the types of nodes that should always be fully expanded
+				expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
+					"function",
+					"method",
+					"table",
+					"if_statement",
+				},
+				exclude = {}, -- exclude these filetypes
+			},
+		},
+	},
+
+	{
+		"norcalli/nvim-colorizer.lua",
+		opts = {
+         "*", -- apply to all file type
+			DEFAULT_OPTIONS = {
+				RGB = true, -- #RGB hex codes
+				RRGGBB = true, -- #RRGGBB hex codes
+				names = true, -- "Name" codes like Blue
+				RRGGBBAA = false, -- #RRGGBBAA hex codes
+				rgb_fn = false, -- CSS rgb() and rgba() functions
+				hsl_fn = false, -- CSS hsl() and hsla() functions
+				css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+				css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+				-- Available modes: foreground, background
+				mode = "background", -- Set the display mode.
 			},
 		},
 	},
