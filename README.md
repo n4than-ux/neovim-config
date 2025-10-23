@@ -1,4 +1,4 @@
-## 🧩 My Neovim
+## 🧩 My Neovim Configuration
 
 - **Neovim:** 0.10 or newer
 - **Plugin manager:** lazy.nvim
