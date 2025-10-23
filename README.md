@@ -14,7 +14,7 @@ Install and add the *bin* folder to your system **PATH**):
     - [fd](https://github.com/sharkdp/fd)
     - [Git](https://git-scm.com/)
 
-## ⚙️ Setup
+## ⚙️ How to Setup
 
 Clone the configuration into your Neovim configuration directory :
 
@@ -89,7 +89,7 @@ Plugins are organized by functionality and loaded through separate Lua modules i
 
 ### git.lua
 
-```
+```lua
 return {
   { "pwntester/octo.nvim" },
   { "lewis6991/gitsigns.nvim" },
@@ -98,7 +98,7 @@ return {
 Git integration and inline diff signs for better version control inside Neovim.
 
 ### lsp.lua
-```
+```lua
 return {
   { "williamboman/mason.nvim" },
   { "williamboman/mason-lspconfig.nvim" },
@@ -113,7 +113,7 @@ return {
 Language support stack for autocompletion, diagnostics, and formatting.
 
 ### misc.lua
-```    
+```lua
 return {
   { "numToStr/Comment.nvim" },
   { "folke/snacks.nvim" },
@@ -127,7 +127,7 @@ return {
 General-purpose tools for better text editing, code insight, and performance tracking.
 
 ### tools.lua
-```
+```lua
 return {
   { "nvim-telescope/telescope.nvim" },
   { "folke/trouble.nvim" },
@@ -140,7 +140,7 @@ return {
 Telescope and file exploration tools for navigation, quick search, and workspace management.
 
 ### ui.lua
-```
+```lua
 return {
   { "craftzdog/solarized-osaka.nvim" },
   { "folke/which-key.nvim" },
