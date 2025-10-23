@@ -52,3 +52,14 @@ end
 if vim.fn.has("nvim-0.8") == 1 then
 	vim.opt.cmdheight = 0
 end
+
+-- Suppress "position_encoding param is required" warnings
+vim.schedule(function()
+	local orig_notify = vim.notify
+	vim.notify = function(msg, level, opts)
+		if type(msg) == "string" and msg:match("position_encoding param is required") then
+			return
+		end
+		orig_notify(msg, level, opts)
+	end
+end)

@@ -148,17 +148,12 @@ return {
 			"MunifTanjim/nui.nvim",
 		},
 		lazy = false,
-		opts = {
-			window = {
-				mappings = {
-					["<space>"] = "none", -- an example of using opts
-				},
-			},
-		},
+		opts = {},
 		keys = {
 			{ "<leader>e", ":Neotree toggle<CR>", silent = true, desc = "Toggle neotree" },
 		},
 		config = function()
+			-- set transparency for neotree
 			local function set_transparency()
 				vim.cmd([[
             hi! NeoTreeNormal guibg=NONE ctermbg=NONE
@@ -173,27 +168,6 @@ return {
 				callback = set_transparency,
 			})
 		end,
-	},
-
-	{
-		"lewis6991/gitsigns.nvim",
-		event = { "BufReadPre", "BufNewFile" },
-		opts = {
-			signs = {
-				add = { text = "┃" },
-				change = { text = "┃" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
-				untracked = { text = "┆" },
-			},
-			signs_staged_enable = true,
-			current_line_blame_opts = {
-				virt_text = true,
-				virt_text_pos = "eol",
-				delay = 1000,
-			},
-		},
 	},
 
 	{

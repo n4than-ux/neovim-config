@@ -7,7 +7,7 @@ return {
 	{
 		"williamboman/mason-lspconfig.nvim",
 		opts = {
-			ensure_installed = { "lua_ls" },
+			ensure_installed = { "lua_ls", "jdtls" },
 		},
 	},
 
@@ -28,9 +28,7 @@ return {
 		opts = {
 			formatters_by_ft = {
 				lua = { "stylua" },
-				python = { "isort", "black" },
-				rust = { "rustfmt", lsp_format = "fallback" },
-				javascript = { "prettierd", "prettier", stop_after_first = true },
+				java = { "google_java_format", lsp_format = "fallback" },
 			},
 			format_on_save = function(bufnr)
 				if vim.api.nvim_buf_line_count(bufnr) > 5000 then
@@ -159,6 +157,29 @@ return {
 								},
 								telemetry = { enable = false },
 							},
+						},
+					},
+					jdtls = {
+						capabilities = capabilities,
+						root_dir = require("lspconfig.util").root_pattern(".git", "pom.xml", "build.gradle"),
+						settings = {
+							java = {
+								home = "C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\java8path", -- set your JDK path
+								-- eclipse = { downloadSources = true },
+								configuration = { updateBuildConfiguration = "interactive" },
+								-- maven = { downloadSources = true },
+								errors = { incompleteClasspath = { severity = "warning" } },
+								format = {
+									enabled = true,
+									settings = {
+										url = vim.fn.stdpath("data") .. "/mason/bin/google-java-format",
+										profile = "GoogleStyle",
+									},
+								},
+							},
+						},
+						init_options = {
+							bundles = {}, -- for nvim-dap later if needed
 						},
 					},
 				},
